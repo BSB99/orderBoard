@@ -39,7 +39,34 @@ public class Main {
                     continue;
                 }
             } else if (orderNum.equals("5")) { // 장바구니 목록
+                System.out.println("아래와 같이 주문 하시겠습니까?");
                 Menu.getOrder();
+                checkNum = sc.nextLine();
+                if (checkNum.equals("1")) {
+                    Menu.clearOrder();
+                    System.out.println("주문이 완료되었습니다!\n" +
+                            "\n" +
+                            "대기번호는 [ 1 ] 번 입니다.\n" +
+                            "(3초후 메뉴판으로 돌아갑니다.)");
+                    try {
+                        Thread.sleep(3000);
+                        orderNum = "0";
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    orderNum = "0";
+                }
+            } else if (orderNum.equals("6")) {
+                System.out.println("진행하던 주문을 취소하시겠습니까?\n" +
+                        "1. 확인        2. 취소");
+                checkNum = sc.nextLine();
+                if (checkNum.equals("1")) {
+                    Menu.clearOrder();
+                    orderNum = "0";
+                } else {
+                    orderNum = "0";
+                }
             }
         }
     }
