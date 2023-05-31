@@ -66,7 +66,7 @@ public class Main {
                 }
             int choiceNum = sc.nextInt();
 
-            String[] burger = Menu.burgerChoice(choiceNum, orderNum);
+            String[] burger = Menu.menuChoice(choiceNum, orderNum);
 
             System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?\n" +
                         "1. 확인        2. 취소");

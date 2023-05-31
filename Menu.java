@@ -39,10 +39,10 @@ public class Menu {
                 break;
         }
 
-        getBurgers(orderNum);
+        getMenus(orderNum);
     }
 
-    public static void getBurgers(int orderNum) {
+    public static void getMenus(int orderNum) {
 
         switch (orderNum) {
             case 1:
@@ -64,7 +64,7 @@ public class Menu {
         }
     }
 
-    public static String[] burgerChoice(int num, int orderNum) {
+    public static String[] menuChoice(int num, int orderNum) {
         Shop menu;
         String[] result;
 
@@ -90,27 +90,41 @@ public class Menu {
         String name = value[0];
         double price = Double.parseDouble(value[1]);
         String description = value[2];
+        int cnt = 1;
 
-        Order menu1 = new Order(name, description, price);
-        orderList.add(0, menu1);
+        boolean hasSameName = false;
 
-        System.out.println(name + "가 장바구니에 추가 되었습니다.");
+        if (orderList.size() >= 1) {
+            for (Order order : orderList) {
+                if (order.getName().equals(name)) {
+                    hasSameName = true;
+                    order.setCnt();
+                    break;
+                }
+            }
+        }
 
+        if (!hasSameName) {
+            Order menu1 = new Order(name, description, price, cnt);
+            orderList.add(0, menu1);
+        }
+        System.out.println(name + "가 장바구니에 추가되었습니다.");
     }
 
     public static void getOrder() {
         Double price = 0.0;
 
-        for (Order burger : orderList) {
-            price += burger.getPrice();
-            System.out.println("메뉴명: " + burger.getName());
-            System.out.println("가격: $" + burger.getPrice());
-            System.out.println("설명: " + burger.getDescription());
+        for (Order menu : orderList) {
+            price += menu.getPrice() * menu.getCnt();
+            System.out.print(String.format("%-15s",menu.getName()));
+            System.out.print("| 가격: $ " + menu.getPrice());
+            System.out.print(" | " + menu.getCnt()+"개 | ");
+            System.out.println(menu.getDescription());
             System.out.println();
         }
 
         System.out.println("[ Total ]\n" +
-                "W "+price);
+                "W "+String.format("%2.1f",price));
 
         System.out.println("1. 주문      2. 메뉴판");
     }
@@ -123,8 +137,8 @@ public class Menu {
         for (Order menu : orderList) {
             String orderName = menu.getName();
             double orderPrice = menu.getPrice();
-
-            Amount menu1 = new Amount(orderName, orderPrice);
+            int cnt = menu.getCnt();
+            Amount menu1 = new Amount(orderName, orderPrice, cnt);
             amountList.add(0, menu1);
         }
     }
@@ -135,9 +149,10 @@ public class Menu {
         System.out.println("[ 합계 ]");
         for (int i = 0; i < amountList.size(); i++) {
             Amount list = amountList.get(i);
-            total += list.getPrice();
-            System.out.print(i+1 + ". 메뉴명: " + String.format("%-17s",list.getName()));
-            System.out.println("| 가격: $ " + list.getPrice());
+            total += list.getPrice() * list.getCnt();
+            System.out.print(i+1 + ". 메뉴명: " + String.format("%-15s",list.getName()));
+            System.out.print("| 가격: $ " + list.getPrice());
+            System.out.println(" | 개수: " + list.getCnt() + "개");
         }
 
         System.out.println("총합 = " + String.format("$%2.1f", total));
