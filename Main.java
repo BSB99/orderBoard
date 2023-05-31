@@ -65,16 +65,16 @@ public class Main {
                     }
                 }
             int choiceNum = sc.nextInt();
-
-            String[] burger = Menu.menuChoice(choiceNum, orderNum);
-
+            String[] menu = Menu.menuChoice(choiceNum, orderNum);
+            int optionNum = sc.nextInt();
+            String[] options = Menu.setOption(orderNum, optionNum, menu);
             System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?\n" +
                         "1. 확인        2. 취소");
 
             int checkNum = sc.nextInt();
 
             if (checkNum == 1) {   // 장바구니에 담기
-                   Menu.setOrder(burger);
+                   Menu.setOrder(options);
                    continue;         // 장바구니에 담고 메뉴판으로 돌아가기 위해 0으로 설정
                } else {                    // 장바구니에 안담으면 다시 메뉴판이 보임
                    continue;

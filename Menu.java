@@ -64,14 +64,14 @@ public class Menu {
         }
     }
 
-    public static String[] menuChoice(int num, int orderNum) {
+    public static String[] menuChoice(int choiceNum, int orderNum) {
         Shop menu;
         String[] result;
 
         if (orderNum == 1) {
-            menu = menuList.get(num - 1);
+            menu = menuList.get(choiceNum - 1);
         } else if (orderNum == 2) {
-            menu = drinkList.get(num - 1);
+            menu = drinkList.get(choiceNum - 1);
         } else {
             return new String[]{"err"};  // orderNum이 1이나 2가 아닌 경우에 대한 처리
         }
@@ -79,12 +79,43 @@ public class Menu {
         String name = menu.getName();
         double price = menu.getPrice();
         String description = menu.getDescription();
-
         System.out.println(name + " " + price + "$ " + description);
 
         result = new String[]{name, String.valueOf(price), description};
 
+        if (orderNum == 1) {
+            System.out.println("위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
+                    "1. Single(W " + menu.getPrice() + ")        2. LargeSet(W "+ (menu.getPrice() + 2)+")");
+        } else {
+            System.out.println("위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
+                    "1. Single(W "+menu.getPrice()+")        2. Large(W "+(menu.getPrice()+1)+")");
+        }
+
         return result;
+    }
+
+    public static String[] setOption(int orderNum, int optionNum, String[] choiceMenu) {
+        String name = choiceMenu[0];
+        double price = Double.parseDouble(choiceMenu[1]);
+        String description = choiceMenu[2];
+
+        if (orderNum == 1) {
+            if (optionNum == 1) {
+                System.out.println(name + "(S)" + " " + price + "$ " + description);
+                return new String[]{name += "(S)", String.valueOf(price), description};
+            } else {
+                System.out.println(name + "(L)" + " " + (price + 2) + "$ " + description);
+                return new String[]{name += "(L)", String.valueOf(price + 2), description};
+            }
+        } else {
+            if (optionNum == 1) {
+                System.out.println(name + "(S)" + " " + price + "$ " + description);
+                return new String[]{name += "(S)", String.valueOf(price), description};
+            } else {
+                System.out.println(name + "(L)" + " " + (price + 1) + "$ " + description);
+                return new String[]{name += "(L)", String.valueOf(price + 1), description};
+            }
+        }
     }
     public static void setOrder(String[] value) {
         String name = value[0];
