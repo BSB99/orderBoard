@@ -13,6 +13,10 @@ public class Order extends Menu{
         this.price = price;
     }
 
+    public Order (String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
     public String getName() {
         return name;
     }
