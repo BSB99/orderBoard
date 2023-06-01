@@ -39,19 +39,19 @@ public class Menu {
                     drinkList.add(3, menu4);
                 }
                 break;
-//            case 3:
-//                if (sideList.size() < 4) {
-//                    Shop menu1 = new Shop("nugget", 1.8, "치킨너겟");
-//                    Shop menu2 = new Shop("French fries", 2.0, "감자튀김");
-//                    Shop menu3 = new Shop("cheese stick", 1.5, "치즈스틱");
-//                    Shop menu4 = new Shop("squid ring", 2.5, "오징어링");
-//
-//                    sideList.add(0, menu1);
-//                    sideList.add(1, menu2);
-//                    sideList.add(2, menu3);
-//                    sideList.add(3, menu4);
-//                }
-//                break;
+            case 3:
+                if (sideList.size() < 4) {
+                    Shop menu1 = new Shop("nugget", 1.8, "치킨너겟");
+                    Shop menu2 = new Shop("French fries", 2.0, "감자튀김");
+                    Shop menu3 = new Shop("cheese stick", 1.5, "치즈스틱");
+                    Shop menu4 = new Shop("squid ring", 2.5, "오징어링");
+
+                    sideList.add(0, menu1);
+                    sideList.add(1, menu2);
+                    sideList.add(2, menu3);
+                    sideList.add(3, menu4);
+                }
+                break;
         }
 
         getMenus(orderNum);
@@ -76,27 +76,35 @@ public class Menu {
                     System.out.printf("%-2d. %-15s | 가격: $%3.1f | 설명: %s%n", (i+1), drink.getName(), drink.getPrice(), drink.getDescription());
                 }
                 break;
-//            case 3:
-//                System.out.println("[ Sides MENU ]");
-//
-//                for (int i = 0; i < sideList.size(); i++) {
-//                    Shop side = sideList.get(i);
-//                    System.out.printf("%-2d. %-15s | 가격: $%3.1f | 설명: %s%n", (i+1), side.getName(), side.getPrice(), side.getDescription());
-//                }
-//                break;
+            case 3:
+                System.out.println("[ Sides MENU ]");
+
+                for (int i = 0; i < sideList.size(); i++) {
+                    Shop side = sideList.get(i);
+                    System.out.printf("%-2d. %-15s | 가격: $%3.1f | 설명: %s%n", (i+1), side.getName(), side.getPrice(), side.getDescription());
+                }
+                break;
         }
     }
 
-    public static String[] menuChoice(int choiceNum, int orderNum) {
+    public static Shop setMenu (int orderNum, int choiceNum) {
         Shop menu;
 
         if (orderNum == 1) {
             menu = menuList.get(choiceNum - 1);
+            return menu;
         } else if (orderNum == 2) {
             menu = drinkList.get(choiceNum - 1);
+            return menu;
         } else {
-            return new String[]{"err"};  // orderNum이 1이나 2가 아닌 경우에 대한 처리
+            menu = sideList.get(choiceNum - 1);
+            return menu;
+//            return new String[]{"err"};  // orderNum이 1이나 2가 아닌 경우에 대한 처리
         }
+    }
+
+    public static String[] menuChoice(int choiceNum, int orderNum) {
+        Shop menu = setMenu(orderNum, choiceNum);
 
         String name = menu.getName();
         double price = menu.getPrice();
@@ -107,10 +115,10 @@ public class Menu {
 
         if (orderNum == 1) {
             System.out.println("\n위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
-                    "1. Single(W " + menu.getPrice() + ")        2. LargeSet(W "+ (menu.getPrice() + 2)+")");
-        } else {
+                    "1. Single(W " + menu.getPrice() + ")        2. LargeSet(W "+ (menu.getPrice() + 1.5)+")");
+        } else if (orderNum == 2) {
             System.out.println("\n위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
-                    "1. Single(W "+menu.getPrice()+")        2. Large(W "+(menu.getPrice()+1)+")");
+                    "1. Single(W "+menu.getPrice()+")        2. Large(W "+(menu.getPrice()+1.5)+")");
         }
 
         return result;
@@ -120,23 +128,22 @@ public class Menu {
         String name = choiceMenu[0];
         double price = Double.parseDouble(choiceMenu[1]);
         String description = choiceMenu[2];
+        String comment = name + "(S) " + price + "$ " + description;
+        String largeComment = name + "(L) "+ (price + 1) + "$ " + description;
+        String orderComment = "위 메뉴를 장바구니에 추가하시겠습니까?\n" +
+                "1. 확인        2. 취소";
 
-        if (orderNum == 1) {
+        if (orderNum == 1 || orderNum == 2) {
             if (optionNum == 1) {
-                System.out.println(name + "(S)" + " " + price + "$ " + description);
+                System.out.println(comment);
                 return new String[]{name += "(S)", String.valueOf(price), description};
             } else {
-                System.out.println(name + "(L)" + " " + (price + 2) + "$ " + description);
-                return new String[]{name += "(L)", String.valueOf(price + 2), description};
+                System.out.println(largeComment);
+                return new String[] {name, String.valueOf(price+1), description};
             }
         } else {
-            if (optionNum == 1) {
-                System.out.println(name + "(S)" + " " + price + "$ " + description);
-                return new String[]{name += "(S)", String.valueOf(price), description};
-            } else {
-                System.out.println(name + "(L)" + " " + (price + 1) + "$ " + description);
-                return new String[]{name += "(L)", String.valueOf(price + 1), description};
-            }
+            System.out.println(orderComment);
+            return new String[] {name, String.valueOf(price), description};
         }
     }
     public static void setOrder(String[] value) {

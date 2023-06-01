@@ -75,6 +75,18 @@ public class Main {
             int choiceNum = sc.nextInt();
             String[] menu = Menu.menuChoice(choiceNum, orderNum);
 
+            if (orderNum == 3) {
+
+                String[] options = Menu.setOption(orderNum, 0, menu);
+                int checkNum = sc.nextInt();
+
+                if (checkNum == 1) {   // 장바구니에 담기
+                    Menu.setOrder(options);
+                    continue;         // 장바구니에 담고 메뉴판으로 돌아가기 위해 0으로 설정
+                } else {                    // 장바구니에 안담으면 다시 메뉴판이 보임
+                    continue;
+                }
+            }
             int optionNum = sc.nextInt();
             String[] options = Menu.setOption(orderNum, optionNum, menu);
 
@@ -86,9 +98,9 @@ public class Main {
             if (checkNum == 1) {   // 장바구니에 담기
                    Menu.setOrder(options);
                    continue;         // 장바구니에 담고 메뉴판으로 돌아가기 위해 0으로 설정
-               } else {                    // 장바구니에 안담으면 다시 메뉴판이 보임
-                   continue;
-               }
+            } else {                    // 장바구니에 안담으면 다시 메뉴판이 보임
+                continue;
+            }
         }
     }
 }
