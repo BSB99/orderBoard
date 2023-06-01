@@ -6,6 +6,8 @@ public class Menu {
     static ArrayList<Order> orderList = new ArrayList<>();
     static ArrayList<Amount> amountList = new ArrayList<>();
     static ArrayList<Shop> drinkList = new ArrayList<>();
+
+    static ArrayList<Shop> sideList = new ArrayList<>();
     String name;
     String description;
     public static void setMenu(int orderNum) {
@@ -37,6 +39,19 @@ public class Menu {
                     drinkList.add(3, menu4);
                 }
                 break;
+//            case 3:
+//                if (sideList.size() < 4) {
+//                    Shop menu1 = new Shop("nugget", 1.8, "치킨너겟");
+//                    Shop menu2 = new Shop("French fries", 2.0, "감자튀김");
+//                    Shop menu3 = new Shop("cheese stick", 1.5, "치즈스틱");
+//                    Shop menu4 = new Shop("squid ring", 2.5, "오징어링");
+//
+//                    sideList.add(0, menu1);
+//                    sideList.add(1, menu2);
+//                    sideList.add(2, menu3);
+//                    sideList.add(3, menu4);
+//                }
+//                break;
         }
 
         getMenus(orderNum);
@@ -54,19 +69,26 @@ public class Menu {
                 }
                 break;
             case 2:
-                System.out.println("[ Drink MENU ]");
+                System.out.println("[ Drinks MENU ]");
 
                 for (int i = 0; i < drinkList.size(); i++) {
-                    Shop burger = drinkList.get(i);
-                    System.out.printf("%-2d. %-15s | 가격: $%3.1f | 설명: %s%n", (i+1), burger.getName(), burger.getPrice(), burger.getDescription());
+                    Shop drink = drinkList.get(i);
+                    System.out.printf("%-2d. %-15s | 가격: $%3.1f | 설명: %s%n", (i+1), drink.getName(), drink.getPrice(), drink.getDescription());
                 }
                 break;
+//            case 3:
+//                System.out.println("[ Sides MENU ]");
+//
+//                for (int i = 0; i < sideList.size(); i++) {
+//                    Shop side = sideList.get(i);
+//                    System.out.printf("%-2d. %-15s | 가격: $%3.1f | 설명: %s%n", (i+1), side.getName(), side.getPrice(), side.getDescription());
+//                }
+//                break;
         }
     }
 
     public static String[] menuChoice(int choiceNum, int orderNum) {
         Shop menu;
-        String[] result;
 
         if (orderNum == 1) {
             menu = menuList.get(choiceNum - 1);
@@ -81,13 +103,13 @@ public class Menu {
         String description = menu.getDescription();
         System.out.println(name + " " + price + "$ " + description);
 
-        result = new String[]{name, String.valueOf(price), description};
+        String[] result = new String[]{name, String.valueOf(price), description};
 
         if (orderNum == 1) {
-            System.out.println("위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
+            System.out.println("\n위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
                     "1. Single(W " + menu.getPrice() + ")        2. LargeSet(W "+ (menu.getPrice() + 2)+")");
         } else {
-            System.out.println("위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
+            System.out.println("\n위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
                     "1. Single(W "+menu.getPrice()+")        2. Large(W "+(menu.getPrice()+1)+")");
         }
 
@@ -160,11 +182,11 @@ public class Menu {
         System.out.println("1. 주문      2. 메뉴판");
     }
 
-    public static void clearOrder() {
+    public static void setClearOrder() {
         orderList.clear();
     }
 
-    public static void setAmount() {
+    public static void setAmount() { // 총액 합계
         for (Order menu : orderList) {
             String orderName = menu.getName();
             double orderPrice = menu.getPrice();
