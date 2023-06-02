@@ -115,10 +115,10 @@ public class Menu {
 
         if (orderNum == 1) {
             System.out.println("\n위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
-                    "1. Single(W " + menu.getPrice() + ")        2. LargeSet(W "+ (menu.getPrice() + 1.5)+")");
+                    "1. Single(W " + menu.getPrice() + ")        2. LargeSet(W "+ (menu.getPrice() + 1)+")");
         } else if (orderNum == 2) {
             System.out.println("\n위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n" +
-                    "1. Single(W "+menu.getPrice()+")        2. Large(W "+(menu.getPrice()+1.5)+")");
+                    "1. Single(W "+menu.getPrice()+")        2. Large(W "+(menu.getPrice()+1)+")");
         }
 
         return result;
